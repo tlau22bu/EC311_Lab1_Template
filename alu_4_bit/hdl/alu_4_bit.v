@@ -3,23 +3,16 @@
 // EC-311 Lab-1 Part-2
   // The names of the variables are as described in the lab handout
 
-module alu_4_bit #
-(
-  parameter INPUT_WIDTH = 4,
-  parameter OUTPUT_WIDTH = 8,
-  parameter SELECT_WIDTH = 2
-)
-(
-  // The inputs 
-  input wire [INPUT_WIDTH-1:0]      A_i,
-  input wire [INPUT_WIDTH-1:0]      B_i,
-  input wire [SELECT_WIDTH-1:0]     S_i,
-
-  // The outputs
-  output wire [OUTPUT_WIDTH-1:0]           Y_o
-
-);
-
-
-
+module ALU(A, B, S, Y);
+    input [3:0]A, B;
+    input [1:0]S;
+    output [7:0]Y;
+    wire [7:0]J, K, L, M;
+    
+    ALUConcatenator con(.A(A), .B(B), .C(J)); //concat
+    ALUAdder add(.A(A), .B(B), .sum(K)); //add
+    ALUShifter shift(.A(A), .B(B), .C(L)); //shift
+    ALUMultiplier multi(.A(A), .B(B), .product(M)); //multi
+    
+    ALUMux mux(.J(J), .K(K), .L(L), .M(M), .S(S), .Y(Y));
 endmodule
