@@ -2,24 +2,20 @@
 
 // EC-311 Lab-1 Part-1
   // The names of the variables are as described in the lab handout
+module addersubtracter(A, B, cin, sum, carryout, v);
+    
+    input [3:0] A, B;
+    input cin;
+    output [3:0] sum;
+    output carryout, v;
+    
+    wire [3:0]b; 
 
-module add_sub_4_bit #
-(
-  parameter WIDTH = 4
-)
-(
-  // The inputs 
-  input wire [WIDTH-1:0]        A_i,
-  input wire [WIDTH-1:0]        B_i,
-  input wire                    M_i,
+xor G1 (b[0], B[0], cin);
+xor G2 (b[1], B[1], cin);
+xor G3 (b[2], B[2], cin);
+xor G4 (b[3], B[3], cin);
 
-  // The outputs
-  output wire                   V_o,
-  output wire                   C_o,
-  output wire [WIDTH-1:0]       S_o
-
-);
-
-
+FourbitAdder FBA(.A(A), .B(b), .cin(cin), .sum(sum), .carryout(carryout), .v(v));
 
 endmodule
